@@ -20,11 +20,83 @@ def scrape_info():
     results = soup.find_all('div', class_='list_text')
     news_title = results[0].find('div', class_='content_title').text
     news_p = results[0].find('div', class_='article_teaser_body').text
+    # End of Title Scrapping --------------
 
 
+    # JPL Mars Space Images - Getting Featured Image --------------
+    url = 'https://spaceimages-mars.com/'
+    browser.visit(url)
 
+    #finding the button
+    button = browser.find_by_tag('button')[1]
+
+    #click button
+    button.click()
+
+    html = browser.html
+
+    # Create BeautifulSoup object; parse with 'html.parser'
+    soup = BeautifulSoup(html, 'html.parser')
+
+    find_image = soup.find('img', class_="fancybox-image")
+
+    image_link = find_image.get('src')
+
+    spaceimages = 'https://spaceimages-mars.com/'
+
+    featured_image_url = spaceimages + image_link
+    # End of Title Scrapping --------------
+
+
+    # Mars Hemispheres - Getting the titles and each image --------------
+
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    #scraping titles
+    html = browser.html
+
+    # Create BeautifulSoup object; parse with 'html.parser'
+    soup = BeautifulSoup(html, 'html.parser')
+
+    title_search = soup.find_all('div', class_="collapsible results")
+
+    titles = soup.find_all('h3')
+
+    title_list = []
+    for t in titles:
+        if t.text != "Back":   
+            title_list.append(t.text)
 
     
+    #scrapping to get each image, getting through each hemisphere to search for the image
+    html = browser.html
+
+    # Create BeautifulSoup object; parse with 'html.parser'
+    soup = BeautifulSoup(html, 'html.parser')
+
+    image_search = soup.find_all('a', class_="itemLink product-item")
+    image_set = []
+
+    for image in image_search:
+        if image["href"] != "#":
+            image_set.append(image["href"])
+    
+    unique_set = []
+    for i in image_set:
+        if i not in unique_set:
+            unique_set.append(i)
+
+
+
+
+
+
+
+
+
+
+
 
     #Make a dictionary to contain all variables to use later in my app/html
 
