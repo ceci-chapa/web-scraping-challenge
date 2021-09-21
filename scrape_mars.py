@@ -23,6 +23,7 @@ def scrape_info():
     # End of Title Scrapping --------------
 
 
+
     # JPL Mars Space Images - Getting Featured Image --------------
     url = 'https://spaceimages-mars.com/'
     browser.visit(url)
@@ -48,6 +49,7 @@ def scrape_info():
     # End of Title Scrapping --------------
 
 
+
     # Mars Hemispheres - Getting the titles and each image --------------
 
     url = 'https://marshemispheres.com/'
@@ -69,7 +71,7 @@ def scrape_info():
             title_list.append(t.text)
 
     
-    #scrapping to get each image, getting through each hemisphere to search for the image
+    #scrapping to get each image, getting through each hemisphere to search for the image 
     html = browser.html
 
     # Create BeautifulSoup object; parse with 'html.parser'
@@ -87,12 +89,32 @@ def scrape_info():
         if i not in unique_set:
             unique_set.append(i)
 
+    
+    # Continuation of getting the image links
+    hemispheres_urls = []
+    for image in unique_set:
+        browser.visit("https://marshemispheres.com/" + image)
+        sleep(.5)
+        html = browser.html
+        soup = BeautifulSoup(html, 'html.parser')
 
+        images = soup.select('li a')
+    
+        for image in images:
+        
+            if image["href"].endswith(".jpg"):
+                hemispheres_urls.append(image["href"])
 
+    
+    # Forming the title/image dictionaries
 
+    # Forming the dictionary
+    hemisphere_list = []
 
+    full_zip = list(zip(title_list, img_list))
 
-
+    for title, img_url in full_zip:
+        hemisphere_list.append({"title": title, "img_url": img_url})
 
 
 
