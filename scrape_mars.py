@@ -105,6 +105,13 @@ def scrape_info():
             if image["href"].endswith(".jpg"):
                 hemispheres_urls.append(image["href"])
 
+
+    #forming the image list
+    img_list = []
+    for links in hemispheres_urls:
+        base_mars = "https://marshemispheres.com/"
+        img_list.append(base_mars + links)
+    
     
     # Forming the title/image dictionaries
     hemisphere_list = []
