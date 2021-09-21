@@ -107,8 +107,6 @@ def scrape_info():
 
     
     # Forming the title/image dictionaries
-
-    # Forming the dictionary
     hemisphere_list = []
 
     full_zip = list(zip(title_list, img_list))
@@ -116,16 +114,22 @@ def scrape_info():
     for title, img_url in full_zip:
         hemisphere_list.append({"title": title, "img_url": img_url})
 
+     # End of hemispheres Scrapping --------------    
 
 
 
+    #Make a dictionary to contain all variables to use later in app/html
 
-    #Make a dictionary to contain all variables to use later in my app/html
-
+    mars_data = {
+        "news_title": news_title,
+        "news_p": news_p,
+        "featured_image_url": featured_image_url,
+        "hemisphere_list": hemisphere_list
+    }
 
 
     # Close the browser after scraping
     browser.quit()
 
     # Return results from the dictionary variable
-    return 
+    return mars_data
