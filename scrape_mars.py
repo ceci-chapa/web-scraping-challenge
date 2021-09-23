@@ -2,6 +2,7 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 from time import sleep
 from webdriver_manager.chrome import ChromeDriverManager
+import pandas as pd
 
 
 def scrape_info():
@@ -48,6 +49,18 @@ def scrape_info():
     featured_image_url = spaceimages + image_link
     # End of Title Scrapping --------------
 
+
+    # Start of Table Scrape ---------------
+    url = 'https://galaxyfacts-mars.com/'
+    table = pd.read_html(url)
+
+    df = table[0]
+    df.columns = ["Description", "Mars", "Earth"]
+    df.set_index("Description", drop=True, inplace=True)
+
+    table_html = df.to_html()
+
+    # End of Table Scrape----------------
 
 
     # Mars Hemispheres - Getting the titles and each image --------------
@@ -131,7 +144,8 @@ def scrape_info():
         "news_title": news_title,
         "news_p": news_p,
         "featured_image_url": featured_image_url,
-        "hemisphere_list": hemisphere_list
+        "hemisphere_list": hemisphere_list,
+        "table_html": table_html
     }
 
 
